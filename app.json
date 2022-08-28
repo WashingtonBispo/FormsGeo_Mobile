@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "FormsGeo_Mobile",
+    "slug": "FormsGeo_Mobile",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "FormsGeo_Mobile"
+}
