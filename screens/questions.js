@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect }  from 'react';
 
 import {
   Text,
@@ -12,7 +12,10 @@ import {
   extendTheme,
   VStack,
   Box,
+  Button
 } from "native-base";
+
+import { api } from '../services/api';
 
 import NativeBaseIcon from "../components/NativeBaseIcon";
 
@@ -26,6 +29,16 @@ const config = {
 export const theme = extendTheme({ config });
 
 const Questions = ({ navigation }) => {
+  useEffect(() => {
+    const getForm = async () => {
+      const response = await api.get('/Form?formId=314C5F27');
+
+      console.log(response)
+    };
+
+    getForm();
+  }, [])
+
   const ToggleDarkMode = () => {
     const { colorMode, toggleColorMode } = useColorMode();
     return (
@@ -77,6 +90,10 @@ const Questions = ({ navigation }) => {
               Learn NativeBase
             </Text>
           </Link>
+          <Button
+            title="Go to Details... again"
+            onPress={() => navigation.push('Final')}
+          />
           <ToggleDarkMode />
         </VStack>
       </Center>

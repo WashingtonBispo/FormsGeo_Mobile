@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Questions from './screens/questions'
+import Final from './screens/final'
 
 const Stack = createNativeStackNavigator();
 
@@ -16,6 +17,7 @@ export default function App() {
         }}
       >
         <Stack.Screen name="Questions" component={Questions} />
+        <Stack.Screen name="Final" component={Final} />
       </Stack.Navigator>
     </NavigationContainer>
   );
