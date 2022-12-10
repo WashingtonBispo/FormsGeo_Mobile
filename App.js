@@ -2,23 +2,23 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import Questions from '../screens/QuestionScreen'
-import FinalPage from '../screens/FinalScreen'
+import Questions from './screens/questions'
 
 const Stack = createNativeStackNavigator();
 
-export default function Navigation() {
+export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator 
+      <Stack.Navigator
+        initialRouteName="Questions"
         screenOptions={{
           headerShown: false
-        }} 
-        initialRouteName="questoes"
+        }}
       >
-        <Stack.Screen name="questoes" component={Questions} />
-        <Stack.Screen name="final" component={FinalPage} />
+        <Stack.Screen name="Questions" component={Questions} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
+
+
