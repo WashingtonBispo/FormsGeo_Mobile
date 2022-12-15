@@ -11,10 +11,10 @@ const MultipleChoice = (props) => {
   const formAnswer = props.formAnswer;
   const setFormAnswer = props.setFormAnswer;
 
-  const handleInsertLikert = (text) => {
+  const handleMultipleChoice = (value) => {
     let tempFormAnswer = formAnswer.map(fa => fa);
     
-    tempFormAnswer[question.index-1].answers[0] = text;
+    tempFormAnswer[question.index-1].answers[0] = value;
 
     setFormAnswer(tempFormAnswer);
   }
@@ -31,12 +31,26 @@ const MultipleChoice = (props) => {
         {question.question}
       </Text>
 
-      <Radio.Group size="lg" name="likertGroup" accessibilityLabel="pick a choice">
-        {question.alternatives && question.alternatives.map(alternative => {
+      <Radio.Group onChange={handleMultipleChoice} size="lg" name="likertGroup" accessibilityLabel="pick a choice">
+        {question.alternatives && question.alternatives.map((alternative, index) => {
           return (
-            <Radio _text={{
+            <Radio 
+              key={index}
+              _text={{
                 mx: 2
-              }} colorScheme="blue" value={alternative.index} my={1}>
+              }}
+              _checked={{
+                bg: "#20D489",
+                borderColor: "#20D489"
+              }}
+              _icon={{
+                color: "#20D489"
+              }}
+              borderColor="#20D489"
+              value={alternative.index} 
+              size="40px" 
+              my={1}
+            >
                 {alternative.value}
             </Radio>
           );

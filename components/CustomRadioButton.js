@@ -6,21 +6,22 @@ import {
   Text
 } from "native-base";
 
-const CustomRadioButton = ({ onPress, selected, children, isLiked, setIsLiked }) => {
+const CustomRadioButton = ({ onPress, selected, children, index, radioMaxW }) => {
   return (
-    <View style={styles.radioButtonContainer}>
-      <TouchableOpacity onPress={onPress} style={styles.radioButton}>
-        {selected ? <View style={styles.radioButtonIcon}><label>14</label></View> : <View><label>14</label></View>}
+    <View style={styles(radioMaxW).radioButtonContainer}>
+      <TouchableOpacity onPress={onPress} style={styles(radioMaxW).radioButton}>
+        {selected ? <View style={styles(radioMaxW).radioButtonIcon}><label>{index}</label></View> : <View><label>{index}</label></View>}
       </TouchableOpacity>
       <TouchableOpacity onPress={onPress}>
-        <Text style={styles.radioButtonText}>{children}</Text>
+        <Text style={styles(radioMaxW).radioButtonText}>{children}</Text>
       </TouchableOpacity>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
+const styles = (radioMaxW) => StyleSheet.create({
   radioButtonContainer: {
+    width: radioMaxW,
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center"
@@ -31,7 +32,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F8F8F8",
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: "#E6E6E6",
+    borderColor: "#20D489",
     alignItems: "center",
     justifyContent: "center"
   },
@@ -39,10 +40,10 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 28,
-    width: 28,
-    borderRadius: 14,
-    backgroundColor: "#98CFB6"
+    height: 40,
+    width: 40,
+    borderRadius: 20,
+    backgroundColor: "#20D489"
   },
   radioButtonText: {
     fontSize: 16,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
 
@@ -9,20 +9,43 @@ import {
   Box
 } from "native-base";
 
-const Likert = (props) => {
+const AncLikert = (props) => {
   const question = props.question;
   const formAnswer = props.formAnswer;
   const setFormAnswer = props.setFormAnswer;
 
-  const [isLiked, setIsLiked] = useState(
-    question.alternatives.map(alternative => {
-      return {
-        id: alternative.index, 
-        value: false,
-        name: alternative.value,
-        selected: false
-      }   
-    }));
+  const [isLiked, setIsLiked] = useState([]);
+
+  useEffect(() => {
+    console.log(question)
+    let tempIsLiked = [];
+
+    for (let index = 0; index < question.alternatives[3]; index++) {
+      if (index == 0)
+        tempIsLiked[index] = {
+          id: question.alternatives[4], 
+          value: false,
+          name: question.alternatives[0],
+          selected: false
+        };
+      else if (index == question.alternatives[3] - 1)
+        tempIsLiked[index] = {
+          id: question.alternatives[5], 
+          value: false,
+          name: question.alternatives[1],
+          selected: false
+        };
+      else
+        tempIsLiked[index] = {
+          id: (parseInt(question.alternatives[4]) + index), 
+          value: false,
+          name: "",
+          selected: false
+        };
+    }
+
+    setIsLiked(tempIsLiked);
+  },[])
 
   const handleInsertLikert = (item) => {
     let updatedState = isLiked.map((isLikedItem) =>
@@ -67,7 +90,7 @@ const Likert = (props) => {
             selected={item.selected}
             key={item.id}
             index={item.id}
-            radioMaxW={(100/isLiked.length) + "%"}
+            radioMaxW={(100/question.alternatives[3]) + "%"}
           >
             {item.name}
           </CustomRadioButton>
@@ -77,4 +100,4 @@ const Likert = (props) => {
   );
 }
 
-export default Likert;
+export default AncLikert;

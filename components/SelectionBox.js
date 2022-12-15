@@ -32,9 +32,14 @@ const SelectionBox = (props) => {
       </Text>
 
       <Checkbox.Group size="lg" name="likertGroup" accessibilityLabel="pick a choice">
-        {question.alternatives && question.alternatives.map(alternative => {
+        {question.alternatives && question.alternatives.map((alternative, index) => {
           return (
-            <Checkbox value={alternative.index}>{alternative.value}</Checkbox>
+            <Checkbox 
+              key={index}
+              value={alternative.index}
+            >
+              {alternative.value}
+            </Checkbox>
           );
         })}
       </Checkbox.Group>
