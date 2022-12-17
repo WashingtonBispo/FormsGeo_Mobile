@@ -34,7 +34,13 @@ const MultipleChoice = (props) => {
         {question.question}
       </Text>
 
-      <Radio.Group onChange={handleMultipleChoice} size="lg" name="likertGroup" accessibilityLabel="pick a choice">
+      <Radio.Group 
+        onChange={handleMultipleChoice} 
+        size="lg" 
+        name="likertGroup" 
+        accessibilityLabel="pick a choice"
+        defaultValue={formAnswer && formAnswer[question.index-1].answers[0] ? formAnswer[question.index-1].answers[0] : ''}
+      >
         {question.alternatives && question.alternatives.map((alternative, index) => {
           return (
             <Radio 

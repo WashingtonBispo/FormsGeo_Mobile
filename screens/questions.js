@@ -21,6 +21,8 @@ import MultipleChoice from '../components/MultipleChoice';
 import SelectionBox from '../components/SelectionBox';
 
 const Questions = ({ navigation }) => {
+  const [questionsShow, setQuestionsShow] = useState(0);
+  const [maxQuestionsShow, setMaxQuestionsShow] = useState(0);
   const [progress, setProgress] = useState(0);
   const [form, setForm] = useState({});
   const [formQuestions, setFormQuestions] = useState([]);
@@ -42,6 +44,11 @@ const Questions = ({ navigation }) => {
       const formData = response.data;
 
       setForm(formData);
+
+      setQuestionsShow(formData.numberQuestions);
+      setMaxQuestionsShow(formData.numberQuestions);
+
+      console.log("form", formData);
 
       const questionsData = JSON.parse(formData.questions);
 
@@ -65,6 +72,20 @@ const Questions = ({ navigation }) => {
     getForm();
   }, []);
   
+  const handlePreviousPage = () => {
+    let questionShow = questionsShow;
+
+    if (questionShow - maxQuestionsShow > 0)
+      setQuestionsShow(questionShow - maxQuestionsShow);
+  }
+
+  const handleNextPage = () => {
+    let questionShow = questionsShow;
+
+    if (questionShow + maxQuestionsShow < formQuestions.length + maxQuestionsShow)
+      setQuestionsShow(questionShow + maxQuestionsShow);
+  }
+
   const handleSubmit = () => {
     console.log(formAnswer);
   }
@@ -72,7 +93,7 @@ const Questions = ({ navigation }) => {
   const handleRenderQuestions = useCallback(() => {
     return (
       <Box>
-        {formQuestions && formQuestions.map((question, index) => {
+        {formQuestions && formQuestions.slice(questionsShow - maxQuestionsShow, questionsShow).map((question, index) => {
           switch(question.type) {
             case 0:
               return (
@@ -149,7 +170,7 @@ const Questions = ({ navigation }) => {
         })}
       </Box>
     );
-  }, [formAnswer])
+  }, [formAnswer, questionsShow, maxQuestionsShow])
 
   return (
     <NativeBaseProvider>
@@ -190,7 +211,13 @@ const Questions = ({ navigation }) => {
         justifyContent="space-between"
         flexDirection="row"
       >
-        <AntDesign name="leftcircleo" size={24} color="#20D489" />
+        <Button
+          background="#F8FAFC"
+          onPress={handlePreviousPage}
+        >
+          <AntDesign name="leftcircleo" size={24} color="#20D489" />
+        </Button>
+
         <Button 
           onPress={handleSubmit} 
           backgroundColor="#20D489"
@@ -198,7 +225,13 @@ const Questions = ({ navigation }) => {
         >
           Finalizar
         </Button>
-        <AntDesign name="rightcircleo" size={24} color="#20D489"  />
+
+        <Button
+          background="#F8FAFC"
+          onPress={handleNextPage}
+        >
+          <AntDesign name="rightcircleo" size={24} color="#20D489"  />
+        </Button>
       </Box>
         
       </Center>

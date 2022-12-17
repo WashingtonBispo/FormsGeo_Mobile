@@ -25,21 +25,21 @@ const AncLikert = (props) => {
           id: question.alternatives[4], 
           value: false,
           name: question.alternatives[0],
-          selected: false
+          selected: formAnswer[question.index-1].answers[0] == question.alternatives[4] ? true : false
         };
       else if (index == question.alternatives[3] - 1)
         tempIsLiked[index] = {
           id: question.alternatives[5], 
           value: false,
           name: question.alternatives[1],
-          selected: false
+          selected: formAnswer[question.index-1].answers[0] == question.alternatives[5] ? true : false
         };
       else
         tempIsLiked[index] = {
           id: (parseInt(question.alternatives[4]) + index), 
           value: false,
           name: "",
-          selected: false
+          selected: formAnswer[question.index-1].answers[0] == (parseInt(question.alternatives[4]) + index) ? true : false
         };
     }
 

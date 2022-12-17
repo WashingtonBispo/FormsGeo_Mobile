@@ -14,14 +14,23 @@ const Likert = (props) => {
   const changeProgress = props.changeProgress;
 
   const [isLiked, setIsLiked] = useState(
+    formAnswer && formAnswer[question.index-1].answers[0] ? 
     question.alternatives.map(alternative => {
       return {
         id: alternative.index, 
         value: false,
         name: alternative.value,
-        selected: false
-      }   
-    }));
+        selected: formAnswer[question.index-1].answers[0] == alternative.index ? true : false
+      }})
+    :
+      question.alternatives.map(alternative => {
+        return {
+          id: alternative.index, 
+          value: false,
+          name: alternative.value,
+          selected: false
+        }})
+  );
 
   const handleInsertLikert = (item) => {
     let updatedState = isLiked.map((isLikedItem) =>

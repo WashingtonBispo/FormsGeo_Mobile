@@ -39,7 +39,8 @@ const OpenAnswer = (props) => {
         placeholder="Digite sua resposta" 
         w="75%" 
         maxW="300"
-        onChange={(e) => {handleInsertOpenAnswer(e.nativeEvent.text)}} 
+        onChange={(e) => {handleInsertOpenAnswer(e.nativeEvent.text)}}
+        value={formAnswer && formAnswer[question.index-1].answers[0] ? formAnswer[question.index-1].answers[0] : ''}
       />
     </Box>
   );

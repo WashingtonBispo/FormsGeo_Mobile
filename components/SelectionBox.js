@@ -34,7 +34,13 @@ const SelectionBox = (props) => {
         {question.question}
       </Text>
 
-      <Checkbox.Group onChange={handleInsertSelection} size="lg" name="likertGroup" accessibilityLabel="pick a choice">
+      <Checkbox.Group 
+        onChange={handleInsertSelection} 
+        size="lg" 
+        name="likertGroup" 
+        accessibilityLabel="pick a choice"
+        defaultValue={formAnswer && formAnswer[question.index-1].answers[0] ? formAnswer[question.index-1].answers : []}
+      >
         {question.alternatives && question.alternatives.map((alternative, index) => {
           return (
             <Checkbox 
@@ -49,7 +55,7 @@ const SelectionBox = (props) => {
               _icon={{
               }}
               borderColor="#20D489"
-              value={alternative.index} 
+              value={alternative.index}
             >
               {alternative.value}
             </Checkbox>

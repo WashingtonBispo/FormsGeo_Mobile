@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import {
   Text,
@@ -13,7 +13,7 @@ const SliderLikert = (props) => {
   const setFormAnswer = props.setFormAnswer;
   const changeProgress = props.changeProgress;
 
-  const [onChangeValue, setOnChangeValue] = React.useState(50);
+  const [onChangeValue, setOnChangeValue] = useState(formAnswer && formAnswer[question.index-1].answers[0] ? formAnswer[question.index-1].answers[0] : 50);
 
   const handleInsertLikert = (value) => {
     let tempFormAnswer = formAnswer.map(fa => fa);
@@ -39,7 +39,7 @@ const SliderLikert = (props) => {
 
       <Stack space={4} alignItems="center" width="80%" maxW="450">
         <Slider 
-          defaultValue={50}
+          defaultValue={formAnswer && formAnswer[question.index-1].answers[0] ? formAnswer[question.index-1].answers[0] : 50}
           size="md"
           onChange={v => {
             setOnChangeValue(Math.floor(v));
