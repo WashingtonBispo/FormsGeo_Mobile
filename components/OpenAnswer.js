@@ -13,6 +13,10 @@ const OpenAnswer = (props) => {
   const changeProgress = props.changeProgress;
 
   const handleInsertOpenAnswer = (text) => {
+    const words = text.length;
+
+    if (question.alternatives[0] * 20 < words) return;
+
     let tempFormAnswer = formAnswer.map(fa => fa);
     
     tempFormAnswer[question.index-1].answers[0] = text;

@@ -46,7 +46,7 @@ const Questions = ({ navigation }) => {
       const formData = response.data;
 
       setForm(formData);
-      console.log(formData)
+      console.log("form", formData)
 
       setQuestionsShow(formData.numberQuestions);
       setMaxQuestionsShow(formData.numberQuestions);
@@ -65,6 +65,7 @@ const Questions = ({ navigation }) => {
           }
       });
 
+      console.log("resp", questionsData)
       setFormAnswer(tempFormAnswer);
     };
 
@@ -87,6 +88,8 @@ const Questions = ({ navigation }) => {
 
   const handleSubmit = () => {
     if (form.status == 4){
+      console.log(formAnswer);
+      console.log(form.status);
       alert("Formulário não pode ser salvo")
     }else{
       var uniqueId = DeviceInfo.getUniqueId();

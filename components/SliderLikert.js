@@ -13,15 +13,24 @@ const SliderLikert = (props) => {
   const setFormAnswer = props.setFormAnswer;
   const changeProgress = props.changeProgress;
 
-  const [onChangeValue, setOnChangeValue] = useState(formAnswer && formAnswer[question.index-1].answers[0] ? formAnswer[question.index-1].answers[0] : 50);
+  const [onChangeValue, setOnChangeValue] = useState(formAnswer && formAnswer[question.index-1].answers[0] ? formAnswer[question.index-1].answers[0] : question.alternatives[5]);
 
   const handleInsertLikert = (value) => {
     let tempFormAnswer = formAnswer.map(fa => fa);
+
+    const totalSum = question.alternatives[4] - question.alternatives[5];
+    const trueSliderValue = parseInt(question.alternatives[5]) + totalSum * value / 100;
     
-    tempFormAnswer[question.index-1].answers[0] = value;
+    tempFormAnswer[question.index-1].answers[0] = trueSliderValue;
 
     setFormAnswer(tempFormAnswer);
     changeProgress();
+  }
+
+  const handleFictionalValue = () => {
+    const totalSum = question.alternatives[4] - question.alternatives[5];
+    const trueSliderValue = formAnswer[question.index-1].answers[0] - parseInt(question.alternatives[5]);
+    return trueSliderValue / totalSum * 100;
   }
 
   return (
@@ -39,10 +48,13 @@ const SliderLikert = (props) => {
 
       <Stack space={4} alignItems="center" width="80%" maxW="450">
         <Slider 
-          defaultValue={formAnswer && formAnswer[question.index-1].answers[0] ? formAnswer[question.index-1].answers[0] : 50}
+          defaultValue={formAnswer && formAnswer[question.index-1].answers[0] ? handleFictionalValue() : 0}
           size="md"
           onChange={v => {
-            setOnChangeValue(Math.floor(v));
+            const totalSum = question.alternatives[4] - question.alternatives[5];
+            const trueSliderValue = parseInt(question.alternatives[5]) + totalSum * v / 100;
+
+            setOnChangeValue(trueSliderValue);
           }}
           onChangeEnd={v => {
             v && handleInsertLikert(Math.floor(v));
