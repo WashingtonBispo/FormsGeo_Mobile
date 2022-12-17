@@ -16,7 +16,6 @@ const AncLikert = (props) => {
   const [isLiked, setIsLiked] = useState([]);
 
   useEffect(() => {
-    console.log(question)
     let tempIsLiked = [];
 
     for (let index = 0; index < question.alternatives[3]; index++) {

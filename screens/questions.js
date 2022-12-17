@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback }  from 'react';
 
+import DeviceInfo from 'react-native-device-info';
+
 import {
   Center,
   Box,
@@ -44,11 +46,10 @@ const Questions = ({ navigation }) => {
       const formData = response.data;
 
       setForm(formData);
+      console.log(formData)
 
       setQuestionsShow(formData.numberQuestions);
       setMaxQuestionsShow(formData.numberQuestions);
-
-      console.log("form", formData);
 
       const questionsData = JSON.parse(formData.questions);
 
@@ -63,8 +64,6 @@ const Questions = ({ navigation }) => {
             answers: [null]
           }
       });
-            
-      console.log("formAnswerCreate", tempFormAnswer)
 
       setFormAnswer(tempFormAnswer);
     };
@@ -87,7 +86,14 @@ const Questions = ({ navigation }) => {
   }
 
   const handleSubmit = () => {
-    console.log(formAnswer);
+    if (form.status == 4){
+      alert("Formulário não pode ser salvo")
+    }else{
+      var uniqueId = DeviceInfo.getUniqueId();
+      console.log(uniqueId);
+      console.log(formAnswer);
+      console.log(form.status);
+    }
   }
 
   const handleRenderQuestions = useCallback(() => {
@@ -222,6 +228,7 @@ const Questions = ({ navigation }) => {
           onPress={handleSubmit} 
           backgroundColor="#20D489"
           borderRadius="20px"
+          isDisabled={progress != 100 ? true : false}
         >
           Finalizar
         </Button>
