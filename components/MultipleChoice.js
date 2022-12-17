@@ -10,6 +10,7 @@ const MultipleChoice = (props) => {
   const question = props.question;
   const formAnswer = props.formAnswer;
   const setFormAnswer = props.setFormAnswer;
+  const changeProgress = props.changeProgress;
 
   const handleMultipleChoice = (value) => {
     let tempFormAnswer = formAnswer.map(fa => fa);
@@ -17,10 +18,12 @@ const MultipleChoice = (props) => {
     tempFormAnswer[question.index-1].answers[0] = value;
 
     setFormAnswer(tempFormAnswer);
+    changeProgress();
   }
 
   return (
     <Box 
+      marginBottom="16px"
       alignItems="center" 
       w="100%"
       paddingBottom='4px'
@@ -48,7 +51,7 @@ const MultipleChoice = (props) => {
               }}
               borderColor="#20D489"
               value={alternative.index} 
-              size="40px" 
+              size="35px" 
               my={1}
             >
                 {alternative.value}

@@ -4,16 +4,14 @@ import {
   Text,
   Box,
   Stack,
-  Slider,
-  Icon
+  Slider
 } from "native-base";
-
-import { MaterialIcons } from "@expo/vector-icons";
 
 const SliderLikert = (props) => {
   const question = props.question;
   const formAnswer = props.formAnswer;
   const setFormAnswer = props.setFormAnswer;
+  const changeProgress = props.changeProgress;
 
   const [onChangeValue, setOnChangeValue] = React.useState(50);
 
@@ -23,10 +21,12 @@ const SliderLikert = (props) => {
     tempFormAnswer[question.index-1].answers[0] = value;
 
     setFormAnswer(tempFormAnswer);
+    changeProgress();
   }
 
   return (
     <Box 
+      marginBottom="16px"
       alignItems="center" 
       w="100%"
       paddingBottom='4px'

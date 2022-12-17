@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
-
 import CustomRadioButton from './CustomRadioButton';
 
 import {
@@ -13,6 +11,7 @@ const Likert = (props) => {
   const question = props.question;
   const formAnswer = props.formAnswer;
   const setFormAnswer = props.setFormAnswer;
+  const changeProgress = props.changeProgress;
 
   const [isLiked, setIsLiked] = useState(
     question.alternatives.map(alternative => {
@@ -40,10 +39,12 @@ const Likert = (props) => {
     tempFormAnswer[question.index-1].answers[0] = selectedValue;
 
     setFormAnswer(tempFormAnswer);
+    changeProgress();
   };
 
   return (
     <Box 
+      marginBottom="16px"
       alignItems="center" 
       w="100%"
       paddingBottom='4px'

@@ -5,8 +5,11 @@ import {
   Box,
   NativeBaseProvider,
   Button,
-  Progress
+  Progress,
+  Text
 } from "native-base";
+
+import { AntDesign } from '@expo/vector-icons'
 
 import { api } from '../services/api';
 
@@ -18,9 +21,19 @@ import MultipleChoice from '../components/MultipleChoice';
 import SelectionBox from '../components/SelectionBox';
 
 const Questions = ({ navigation }) => {
+  const [progress, setProgress] = useState(0);
   const [form, setForm] = useState({});
   const [formQuestions, setFormQuestions] = useState([]);
   const [formAnswer, setFormAnswer] = useState([]);
+
+  const changeProgress = useCallback(() => {
+    let count = 0;
+    for (let index = 0; index < formAnswer.length; index++) {
+      if (formAnswer[index].answers[0] != null) count++;
+    }
+
+    setProgress(count/formAnswer.length * 100);
+  }, [formAnswer]);
 
   useEffect(() => {
     const getForm = async () => {
@@ -36,54 +49,11 @@ const Questions = ({ navigation }) => {
       
       let tempFormAnswer = [];
       questionsData.forEach(question => {
-        switch(question.type){
-          case 0:
-            tempFormAnswer[question.index-1] = {
-              index: question.index,
-              type: question.type,
-              subType: 0,
-              answers: ['']
-            }
-            break;
-
-          case 1:
-            tempFormAnswer[question.index-1] = {
-              index: question.index,
-              type: question.type,
-              subType: 0,
-              answers: [null]
-            }
-            break;
-
-          case 2:
-            tempFormAnswer[question.index-1] = {
-              index: question.index,
-              type: question.type,
-              subType: question.alternatives[2],
-              answers: [null]
-            }
-            break;
-
-          case 3:
-            tempFormAnswer[question.index-1] = {
-              index: question.index,
-              type: question.type,
-              subType: 0,
-              answers: [null]
-            }
-            break;
-
-          case 4:
-            tempFormAnswer[question.index-1] = {
-              index: question.index,
-              type: question.type,
-              subType: 0,
-              answers: [null]
-            }
-            break;
-
-          default:
-            break;
+          tempFormAnswer[question.index-1] = {
+            index: question.index,
+            type: question.type,
+            subType: question.type == 2 ? question.alternatives[2] : 0,
+            answers: [null]
           }
       });
             
@@ -94,7 +64,7 @@ const Questions = ({ navigation }) => {
 
     getForm();
   }, []);
-
+  
   const handleSubmit = () => {
     console.log(formAnswer);
   }
@@ -111,6 +81,7 @@ const Questions = ({ navigation }) => {
                   question={question}
                   formAnswer={formAnswer}
                   setFormAnswer={setFormAnswer}
+                  changeProgress={changeProgress}
                 />
               );
 
@@ -121,6 +92,7 @@ const Questions = ({ navigation }) => {
                   question={question}
                   formAnswer={formAnswer}
                   setFormAnswer={setFormAnswer}
+                  changeProgress={changeProgress}
                 />
               );
 
@@ -132,6 +104,7 @@ const Questions = ({ navigation }) => {
                     question={question}
                     formAnswer={formAnswer}
                     setFormAnswer={setFormAnswer}
+                    changeProgress={changeProgress}
                   />
               );
 
@@ -142,6 +115,7 @@ const Questions = ({ navigation }) => {
                     question={question}
                     formAnswer={formAnswer}
                     setFormAnswer={setFormAnswer}
+                    changeProgress={changeProgress}
                   />
               );
 
@@ -152,6 +126,7 @@ const Questions = ({ navigation }) => {
                   question={question}
                   formAnswer={formAnswer}
                   setFormAnswer={setFormAnswer}
+                  changeProgress={changeProgress}
                 />
               );
 
@@ -162,6 +137,7 @@ const Questions = ({ navigation }) => {
                   question={question}
                   formAnswer={formAnswer}
                   setFormAnswer={setFormAnswer}
+                  changeProgress={changeProgress}
                 />
               );
 
@@ -177,23 +153,52 @@ const Questions = ({ navigation }) => {
 
   return (
     <NativeBaseProvider>
-
-      <Center w="100%">
-        <Box w="90%" maxW="400">
-          <Progress bg="coolGray.100" _filledTrack={{
-          bg: "lime.500"
-        }} value={75} mx="4" />
-        </Box>
-      </Center>
-
       <Center
+        paddingTop="20px"
         _dark={{ bg: "blueGray.900" }}
         _light={{ bg: "blueGray.50" }}
       >
+        <Text fontSize="14px">
+          {Math.trunc(progress) + "%"}
+        </Text>
+
+        <Box 
+          w="90%" 
+          maxW="400"
+          marg
+          marginBottom="16px"
+        >
+          <Progress 
+            bg="#9D9D9D"
+            size="lg"
+            _filledTrack={{
+              bg: "#20D489"
+            }} 
+            value={progress} 
+            mx="4" 
+          />
+        </Box>
+
         {handleRenderQuestions()}
 
-      <Box alignItems="center">
-        <Button onPress={handleSubmit}>Finalizar</Button>
+      <Box 
+        width="80%"
+        alignItems="center"
+        marginTop="20px"
+        marginBottom="10px"
+        display="flex"
+        justifyContent="space-between"
+        flexDirection="row"
+      >
+        <AntDesign name="leftcircleo" size={24} color="#20D489" />
+        <Button 
+          onPress={handleSubmit} 
+          backgroundColor="#20D489"
+          borderRadius="20px"
+        >
+          Finalizar
+        </Button>
+        <AntDesign name="rightcircleo" size={24} color="#20D489"  />
       </Box>
         
       </Center>
