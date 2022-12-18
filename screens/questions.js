@@ -89,16 +89,19 @@ const Questions = ({ route, navigation }) => {
       if (form.status == 4){
         alert("Formulário não pode ser salvo")
       }else{
-        var uniqueId = DeviceInfo.getUniqueId();
+        //var uniqueId = DeviceInfo.getUniqueId();
+        const answersForm = JSON.stringify(formAnswer);
   
         const postData = {
-          answer: formAnswer,
+          answer: answersForm,
           typeAnswer: form.status,
-          idParticipante: uniqueId,
-          idForm: form.id
+          idParticipante: "lkjdflkjsdlfkjsdlkfjsldkf",
+          idForm: form.idForm
         }
+
+        console.log(postData)
   
-        await api.post('Form', postData);
+        await api.post('Answer', postData);
 
         navigation.navigate('Final');
       }
