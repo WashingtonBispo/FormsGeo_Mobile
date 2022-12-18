@@ -31,7 +31,7 @@ export const theme = extendTheme({ config });
 const Questions = ({ navigation }) => {
   useEffect(() => {
     const getForm = async () => {
-      const response = await api.get('/Form?formId=314C5F27');
+      const response = await api.get('/Form?formId=C20E6E0B');
 
       console.log(response)
     };
@@ -93,6 +93,10 @@ const Questions = ({ navigation }) => {
           <Button
             title="Go to Details... again"
             onPress={() => navigation.push('Final')}
+          />
+          <Button
+            title="Go to Details... again"
+            onPress={() => navigation.push('Home')}
           />
           <ToggleDarkMode />
         </VStack>
