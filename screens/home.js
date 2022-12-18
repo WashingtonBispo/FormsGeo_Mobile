@@ -1,4 +1,4 @@
-import React, { useState, useEffect }  from 'react';
+import React, { useState }  from 'react';
 
 import {
   Text,
@@ -19,8 +19,6 @@ import { StyleSheet, TextInput, Modal } from 'react-native';
 
 import { api } from '../services/api';
 
-import NativeBaseIcon from "../components/NativeBaseIcon";
-
 // Define the config
 const config = {
   useSystemColorMode: false,
@@ -32,16 +30,10 @@ export const theme = extendTheme({ config });
 
 
 const Home = ({ navigation }) => {
-  useEffect(() => {
-
-    
-  }, [])
-
   const getForm = async () => {
     const response = await api.get('/Form?formId=' + formId);
 
     setModalVisible(!modalVisible)
-    console.log(response.data)
     navigation.navigate('InfoResearch', { Form: response.data })
    };
 

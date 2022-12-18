@@ -22,7 +22,8 @@ import SliderLikert from '../components/SliderLikert';
 import MultipleChoice from '../components/MultipleChoice';
 import SelectionBox from '../components/SelectionBox';
 
-const Questions = ({ navigation }) => {
+const Questions = ({ route, navigation }) => {
+  const { Form } = route.params;
   const [questionsShow, setQuestionsShow] = useState(0);
   const [maxQuestionsShow, setMaxQuestionsShow] = useState(0);
   const [progress, setProgress] = useState(0);
@@ -40,13 +41,11 @@ const Questions = ({ navigation }) => {
   }, [formAnswer]);
 
   useEffect(() => {
+    console.log(Form)
     const getForm = async () => {
-      const response = await api.get('/Form?formId=913F0B2F');
-
-      const formData = response.data;
+      const formData = Form;
 
       setForm(formData);
-      console.log("form", formData)
 
       setQuestionsShow(formData.numberQuestions);
       setMaxQuestionsShow(formData.numberQuestions);
@@ -65,7 +64,6 @@ const Questions = ({ navigation }) => {
           }
       });
 
-      console.log("resp", questionsData)
       setFormAnswer(tempFormAnswer);
     };
 
@@ -87,16 +85,26 @@ const Questions = ({ navigation }) => {
   }
 
   const handleSubmit = () => {
-    if (form.status == 4){
-      console.log(formAnswer);
-      console.log(form.status);
-      alert("Formulário não pode ser salvo")
-    }else{
-      var uniqueId = DeviceInfo.getUniqueId();
-      console.log(uniqueId);
-      console.log(formAnswer);
-      console.log(form.status);
-    }
+    const postData = async () => {
+      if (form.status == 4){
+        alert("Formulário não pode ser salvo")
+      }else{
+        var uniqueId = DeviceInfo.getUniqueId();
+  
+        const postData = {
+          answer: formAnswer,
+          typeAnswer: form.status,
+          idParticipante: uniqueId,
+          idForm: form.id
+        }
+  
+        await api.post('Form', postData);
+
+        navigation.navigate('Final');
+      }
+    };
+    
+    postData();    
   }
 
   const handleRenderQuestions = useCallback(() => {
