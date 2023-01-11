@@ -41,7 +41,6 @@ const Questions = ({ route, navigation }) => {
   }, [formAnswer]);
 
   useEffect(() => {
-    console.log(Form)
     const getForm = async () => {
       const formData = Form;
 
@@ -95,7 +94,7 @@ const Questions = ({ route, navigation }) => {
         const postData = {
           answer: answersForm,
           typeAnswer: form.status,
-          idParticipante: "lkjdflkjsdlfkjsdlkfjsldkf",
+          idParticipante: "Default",
           idForm: form.idForm
         }
 
@@ -103,7 +102,7 @@ const Questions = ({ route, navigation }) => {
   
         await api.post('Answer', postData);
 
-        navigation.navigate('Final');
+        navigation.navigate('Final',{ Form: Form });
       }
     };
     

@@ -16,10 +16,10 @@ import RenderHtml from 'react-native-render-html';
 import { api } from '../services/api';
 
 // Define the config
-const config = {
-  useSystemColorMode: false,
-  initialColorMode: "dark",
-};
+  const config = {
+    useSystemColorMode: false,
+    initialColorMode: "dark",
+  };
 
 // extend the theme
 export const theme = extendTheme({ config });
@@ -167,26 +167,6 @@ const styles = StyleSheet.create({
         borderRadius: '8px',
         border: '2px solid #999999',
         padding: "5px"
-      },
-      button: {
-        borderRadius: 20,
-        padding: 10,
-        elevation: 2
-      },
-      buttonOpen: {
-        backgroundColor: "#F194FF",
-      },
-      buttonClose: {
-        backgroundColor: "#2196F3",
-      },
-      textStyle: {
-        color: "white",
-        fontWeight: "bold",
-        textAlign: "center"
-      },
-      modalText: {
-        marginBottom: 15,
-        textAlign: "center"
       }
   });
 
